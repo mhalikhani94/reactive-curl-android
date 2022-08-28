@@ -1,4 +1,0 @@
-Name: nlohmann_json
-Description: JSON for Modern C++
-Version: 3.11.2
-Cflags: -I../../../../../../../src/main/jniLibs/arm64-v8a/include
