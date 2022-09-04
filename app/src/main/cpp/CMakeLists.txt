@@ -186,7 +186,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
 
     add_library(reactivex
             SHARED
-            native-lib.cpp rx-request-manager.cpp rx-request-manager.hpp rx-curl.hpp
+            native-lib.cpp rx-request-manager.cpp rx-request-manager.hpp rx-curl.hpp types.hpp
             )
 
     add_dependencies(reactivex yamlcpp zlib openssl curl nlohmann)

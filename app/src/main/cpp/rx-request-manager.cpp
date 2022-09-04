@@ -9,23 +9,29 @@ RxRequestManager& RxRequestManager::instance()
 	return s_instance;
 }
 
-rxcpp::observable<rxcpp::observable<std::string>> RxRequestManager::send_request(const std::string& url, std::string method, std::map<std::string, std::string> headers,
+rxcpp::observable<std::string> RxRequestManager::send_request(const std::string& url, HttpRequestMethod method, std::map<std::string, std::string> headers,
                                const std::string& body)
 {
-	return observable<>::create<rxcpp::observable<std::string>>([=](subscriber<rxcpp::observable<std::string>>& out)
+	return observable<>::create<std::string>([=](subscriber<std::string>& out)
 	{
-		const auto request = m_rx_curl->create(HttpRequest{url, std::move(method), std::move(headers), body})
+
+		const auto request = m_rx_curl->create(HttpRequest{url, method, std::move(headers), body})
 		| rxcpp::rxo::map([&](const HttpResponse& r)
 		{
 			return r.body.complete;
 		});
+
 		request.subscribe(
-		[&](const rxcpp::observable<std::string>& s)
+		[=](const rxcpp::observable<std::string>& s)
 		{
-			// response_message = s.sum();
-			out.on_next(s.sum());
-			out.on_completed();
-		}, []
+			s.sum().subscribe(
+			[=](const std::string& response_string)
+			{
+				// std::cout << "response_string" << std::endl;
+				out.on_next(response_string);
+				out.on_completed();
+			});
+		}, [] ()
 		{
 		});
 	});

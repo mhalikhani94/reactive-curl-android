@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ReactiveX</string>
+    <string name="edit_post_message" translatable="false">https://httpbin.org/post</string>
+    <string name="button_get_send" translatable="false">GET</string>
+    <string name="button_post_send">POST</string>
+    <string name="edit_get_message">https://httpbin.org/get</string>
 </resources>

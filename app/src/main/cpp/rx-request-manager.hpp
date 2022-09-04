@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <rxcpp/rx.hpp>
+#include "types.hpp"
 
 struct RxCurl;
 
@@ -20,7 +21,7 @@ public:
 
 	~RxRequestManager() = default;
 
-	rxcpp::observable<rxcpp::observable<std::string>> send_request(const std::string& url, std::string method, std::map<std::string, std::string> headers,
+	rxcpp::observable<std::string> send_request(const std::string& url, HttpRequestMethod method, std::map<std::string, std::string> headers,
 	                  const std::string& body);
 
 	void set_curl_config(long timeout = 500) const;
@@ -28,8 +29,6 @@ public:
 
 private:
 	RxRequestManager();
-
 	RxCurl* m_rx_curl;
-	std::string html;
 };
 #endif //RX_REQUEST_MANAGER_HPP
